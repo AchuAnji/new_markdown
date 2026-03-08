@@ -12,6 +12,35 @@ repos:
       - id: mypy
         args: [--ignore-missing-imports]
 
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-added-large-files
+      - id: check-merge-conflict
+      - id: debug-statements
+      - id: check-ast
+      - id: check-json
+
+  - repo: https://github.com/Lucas-C/pre-commit-hooks
+    rev: v1.5.4
+    hooks:
+      - id: forbid-crlf
+      - id: remove-crlf
+      - id: forbid-tabs
+      - id: remove-tabs
+
+  - repo: local
+    hooks:
+      - id: check-gpl-license
+        name: Check for GPL licenses
+        entry: bash -c 'if find . -name "*.py" -exec grep -l "GPL\|General Public License" {} \; | grep -q .; then echo "GPL license found"; exit 1; else echo "No GPL licenses found"; fi'
+        language: system
+        pass_filenames: false
+        always_run: true
+
   - repo: local
     hooks:
       - id: pytest
